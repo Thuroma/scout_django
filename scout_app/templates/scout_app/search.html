@@ -1,0 +1,16 @@
+<h1>Scout it out!</h1>
+
+<div class="map" id="map">
+    <p>The map canvas will go here.</p>
+</div>
+
+<form method="POST" action="{%url 'new_search' %}">
+    {% csrf_token %}
+    {{ new_search_form }}
+    <button type="submit">Scout</button>
+</form>
+
+
+<hr>
+
+<a href="{% url 'bookmarked_searches' %}">Bookmarked searches</a>

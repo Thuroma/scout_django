@@ -1,0 +1,17 @@
+<h2>Bookmarked Searches</h2>
+
+{% for search in searches %}
+
+<div>
+    {{ search.name }}
+</div>
+
+{% empty %}
+
+<p>You don't have any bookmarked searches</p>
+
+{% endfor %}
+
+<hr>
+
+<a href="{% url 'new_search' %}">New search</a>
