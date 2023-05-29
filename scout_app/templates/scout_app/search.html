@@ -1,3 +1,6 @@
+{% extends 'scout_app/base.html' %}
+{% block content %}
+
 <h1>Scout it out!</h1>
 
 <div class="map" id="map">
@@ -7,10 +10,7 @@
 <form method="POST" action="{%url 'new_search' %}">
     {% csrf_token %}
     {{ new_search_form }}
-    <button type="submit">Scout</button>
+    <button type="submit" id="scout-button" class="btn btn-primary">Scout</button>
 </form>
 
-
-<hr>
-
-<a href="{% url 'bookmarked_searches' %}">Bookmarked searches</a>
+{% endblock %}

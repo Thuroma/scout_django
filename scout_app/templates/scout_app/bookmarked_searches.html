@@ -1,3 +1,6 @@
+{% extends 'scout_app/base.html' %}
+{% block content %}
+
 <h2>Bookmarked Searches</h2>
 
 {% for search in searches %}
@@ -12,6 +15,4 @@
 
 {% endfor %}
 
-<hr>
-
-<a href="{% url 'new_search' %}">New search</a>
+{% endblock %}
