@@ -1,11 +1,16 @@
 {% extends 'scout_app/base.html' %}
 {% block content %}
 
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- todo - finish this column -->
+    </div>
+</div>
+
 <h1>Scout it out!</h1>
 
-<div class="map" id="map">
-    <p>The map canvas will go here.</p>
-</div>
+<div class="search-map" id="search-map"></div>
 
 <form method="POST" action="{%url 'new_search' %}">
     {% csrf_token %}
