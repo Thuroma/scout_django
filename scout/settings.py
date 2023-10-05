@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path) # loads the configs from .env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +25,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-b=i3(&k#@9(dnb-56+d(vn9(+f^&*3ym72#a7#nw$+mhu&w08p'
+SECRET_KEY = str(os.getenv('DJANGO_SECRET_KEY'))
+
+# API Keys and Auth
+CENSUS_KEY = str(os.getenv('CENSUS_KEY'))
+YELP_AUTHORIZATION = str(os.getenv('YELP_AUTHORIZATION'))
+
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

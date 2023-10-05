@@ -1,7 +1,6 @@
 
 
-.search-map {
-    width: 700px;
+#map {
     height: 500px;
     margin: auto;
     margin-bottom: 1rem;
@@ -15,7 +14,7 @@ body {
 /* Header */
 #main-header {
     text-align: center;
-    background: rgb(0, 95, 79);
+    background: #008080;
     font-family: 'Caveat', cursive;
     font-size: 90px;
     padding: 1rem;
@@ -26,14 +25,14 @@ body {
 /* Navigation Bar */
 /* Add a black background color to the top navigation */
 .topnav {
-    background-color: #333;
+    background-color: #cbbf7a;
     overflow: hidden;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
     float: left;
-    color: #f2f2f2;
+    color: #000000;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -95,4 +94,85 @@ body {
     background-color: var(--cyan7);
     border-color: var(--cyan8);
     color: var(--cyan10);
+}
+
+
+/* Styles for the tabbed content */
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+  }
+  
+/* Style the buttons that are used to open the tab content */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    width: 100%;
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+/* fading the content in and out */
+.tabcontent {
+    animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+/* Style the close button */
+.topright {
+    float: right;
+    cursor: pointer;
+    font-size: 28px;
+}
+
+
+
+
+
+/* table styles */
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid rgb(41, 155, 145);
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table.center {
+    margin-left: auto;
+    margin-right: auto;
 }

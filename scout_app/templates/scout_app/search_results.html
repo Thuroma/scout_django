@@ -1,12 +1,133 @@
 {% extends 'scout_app/base.html' %}
 {% block content %}
 
-<h1>Here are the coordinates for {{ search.name }}</h1>
+<div>
+    <form action="{% url 'lat_long_search' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <label for="latitude-input">Latitude</label>
+            <input id="latitude-input" name="latitude" onkeydown="event.preventDefault()" required autocomplete="off" value="{{ class_latitude }}">
+            
+            <label for="longitude-input">Longitude</label>
+            <input id="longitude-input" name="longitude" onkeydown="event.preventDefault()" required autocomplete="off" value="{{ class_longitude }}">
+            
+            <input type="submit" id="scout-button" class="btn btn-primary" name="lat_long_search" value="Scout">
+        </div>
+    </form>
+</div>
 
-<p>Latitude: {{ search.latitude }}</p>
+<div class="tab">
+    <button class="tablinks" onclick="openSource(event, 'Census')">Census</button>
+    <button class="tablinks" onclick="openSource(event, 'Yelp')">Yelp</button>
+    <button class="tablinks" onclick="openSource(event, 'Ticketmaster')">Ticketmaster</button>
+</div>
 
-<p>Longitude: {{ search.longitude }}</p>
+<h3>Here is the information for {{ name }} at {{ latitude }}, {{ longitude }}</h3>
 
-<p>Geocoder response: {{ response }}</p>
+<div class="tabcontent" id="Census">
+    <span onclick="this.parentElement.style.display='none'" class="topright">x</span>
+
+
+    <caption>Population Data</caption>
+    <table class="center">
+        <tr>
+            <th>Population Type</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td>Total population</td>
+            <td>{{ total_pop }}</td>
+        </tr>
+        <tr>
+            <td>White</td>
+            <td>{{ white_pop }}%</td>
+        </tr>
+        <tr>
+            <td>Black</td>
+            <td>{{ black_pop }}%</td>
+        </tr>
+        <tr>
+            <td>Indigenous</td>
+            <td>{{ indigenous_pop }}%</td>
+        </tr>
+        <tr>
+            <td>Asian</td>
+            <td>{{ asian_pop }}%</td>
+        </tr>
+        <tr>
+            <td>Pacific Islander</td>
+            <td>{{ pacific_pop }}%</td>
+        </tr>
+        <tr>
+            <td>Hispanic</td>
+            <td>{{ hispanic_pop }}%</td>
+        </tr>
+    </table>
+
+    <caption>Housing Types</caption>
+    <table class="center">
+        <tr>
+            <td>Total Institutionalized</td>
+            <td>{{ institutionalized_pop }}</td>
+        </tr>
+        <tr>
+            <td>Institutionalized Adults</td>
+            <td>{{ institutionalized_adult }}</td>
+        </tr>
+        <tr>
+            <td>Institutionalized Juveniles</td>
+            <td>{{ institutionalized_juvenile }}</td>
+        </tr>
+        <tr>
+            <td>University Housing</td>
+            <td>{{ university_housing }}</td>
+        </tr>
+        <tr>
+            <td>Military Housing</td>
+            <td>{{ military_pop }}</td>
+        </tr>
+    </table>
+    
+</div>
+
+<div class="tabcontent" id="Yelp">
+    <span onclick="this.parentElement.style.display='none'" class="topright">x</span>
+    
+    <h3>Here are the results from Yelp</h3>
+    <container>
+        <div class="row">
+            {% for key,value in yelp_data.items %}
+                <div class="col">
+                    <h2>{{ key }}</h2>
+                    {% for value in value.businesses %}
+                    <p>{{ value.name }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}            
+        </div>
+    </container>
+
+</div>
+
+<div class="tabcontent" id="Ticketmaster">
+    <span onclick="this.parentElement.style.display='none'" class="topright">x</span>
+    <h3>Here are the results from Ticketmaster</h3>
+</div>
+
+{{ yelp_data|json_script:"yelp-data-json" }}
+
+<p data-lat="{{ latitude }}" id="latitude"></p>
+<p data-long="{{ longitude }}" id="longitude"></p>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+
+    
+
+</script>
 
 {% endblock %}

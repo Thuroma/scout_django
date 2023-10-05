@@ -4,4 +4,4 @@ from .models import Search
 class NewSearchForm(forms.ModelForm):
     class Meta:
         model = Search
-        fields = ('name', 'latitude', 'longitude')
+        fields = ('street_address', 'city', 'state', 'zip_code')
