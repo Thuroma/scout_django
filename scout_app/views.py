@@ -151,7 +151,7 @@ def search_results(request, search_pk):
             "Authorization": f'{yelp_api_authorization}'
         }
 
-        list_of_keywords = ['Park', 'Civic Center', 'Fitness', 'Brewery', 'Restaurant', 'Grocery Store', 'School', 'Convienience Stores', 'Bars', 'Vegan']
+        list_of_keywords = ['Parks', 'Civic Centers', 'Gyms', 'Breweries', 'Restaurants', 'Grocery Stores', 'Schools', 'Convienience Stores', 'Bars', 'Vegan']
 
         yelp_results_dictionary = {}
 
@@ -164,6 +164,8 @@ def search_results(request, search_pk):
 
             if response_json['businesses'] != []:
                 yelp_results_dictionary[f'{keyword}'] = response_json
+
+        pprint(yelp_results_dictionary)
 
     except:
         print('There was an issue with the yelp call.')
