@@ -1,5 +1,10 @@
 
 
+#messages {
+    background-color: #ffd900;
+    color: #000000;
+}
+
 #map {
     height: 500px;
     margin: auto;
@@ -158,6 +163,7 @@ body {
 
 
 /* table styles */
+
 table {
     table-layout: fixed;
     width: 100%;
