@@ -96,14 +96,27 @@
     <h3>Here are the results from Yelp</h3>
     <container>
         <div class="row">
+        <table>
             {% for key,value in yelp_data.items %}
-                <div class="col">
-                    <h2>{{ key }}</h2>
-                    {% for value in value.businesses %}
-                    <p>{{ value.name }}</p>
-                    {% endfor %}
-                </div>
-            {% endfor %}            
+            <tr>
+                <th>{{ key }}</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Rating</th>
+                <th>Website</th>
+            </tr>
+                {% for value in value.businesses %}
+                <tr>
+                    <td>{{ value.name }}</td>
+                    <td>{{ value.location.address1 }}, {{ value.location.city }}, {{ value.location.state }} {{ value.location.zip_code }}</td>
+                    <td>{{ value.display_phone }}</td>
+                    <td>{{ value.rating }}/5</td>
+                    <td><a target="_blank" href="{{ value.url }}">Yelp page</a></td>
+                </tr>
+                {% endfor %}
+            <hr>
+        {% endfor %}    
+        </table>        
         </div>
     </container>
 
