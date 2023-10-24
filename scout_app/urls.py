@@ -1,6 +1,11 @@
 from django.urls import path
 from . import views
 
+# To serve static files during development
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     # home page
     path('', views.new_search, name='new_search'),

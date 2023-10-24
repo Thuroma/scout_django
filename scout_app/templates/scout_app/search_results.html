@@ -19,85 +19,58 @@
 <div class="tab">
     <button class="tablinks" onclick="openSource(event, 'Census')">Census</button>
     <button class="tablinks" onclick="openSource(event, 'Yelp')">Yelp</button>
-    <button class="tablinks" onclick="openSource(event, 'Ticketmaster')">Ticketmaster</button>
 </div>
-
-<h3>Here is the information for {{ name }} at {{ latitude }}, {{ longitude }}</h3>
 
 <div class="tabcontent" id="Census">
     <span onclick="this.parentElement.style.display='none'" class="topright">x</span>
 
+    <div class="container">
+        {% if census_geography_data.incorporated_place_code %}
+            <h3>Area information for {{ census_geography_data.incorporated_place_name }}, {{ census_geography_data.state_name }}</h3>
+        {% elif census_geography_data.county_subdivision_code %}
+            <h3>Area information for {{ census_geography_data.county_subdivision_name }}</h3>
+            <h3>A subdivision of {{ census_geography_data.county_name }}, {{ census_geography_data.state_name }}</h3>
+        {% elif census_geography_data.county_code %}
+            <h3>Area information for {{ census_geography_data.county_name }}, {{ census_geography_data.state_name }}</h3>
+        {% endif %}
+    </div>
 
-    <caption>Population Data</caption>
-    <table class="center">
-        <tr>
-            <th>Population Type</th>
-            <th>Total</th>
-        </tr>
-        <tr>
-            <td>Total population</td>
-            <td>{{ total_pop }}</td>
-        </tr>
-        <tr>
-            <td>White</td>
-            <td>{{ white_pop }}%</td>
-        </tr>
-        <tr>
-            <td>Black</td>
-            <td>{{ black_pop }}%</td>
-        </tr>
-        <tr>
-            <td>Indigenous</td>
-            <td>{{ indigenous_pop }}%</td>
-        </tr>
-        <tr>
-            <td>Asian</td>
-            <td>{{ asian_pop }}%</td>
-        </tr>
-        <tr>
-            <td>Pacific Islander</td>
-            <td>{{ pacific_pop }}%</td>
-        </tr>
-        <tr>
-            <td>Hispanic</td>
-            <td>{{ hispanic_pop }}%</td>
-        </tr>
-    </table>
+    <div class="container">
+        <h4>Geography Data</h4>
+        <table>
+            <tr>
+                <td>School district</td>
+                <td>{{ census_geography_data.school_district_name }}</td>
+            </tr>
+        </table>
+        <br>
+    </div>
 
-    <caption>Housing Types</caption>
-    <table class="center">
-        <tr>
-            <td>Total Institutionalized</td>
-            <td>{{ institutionalized_pop }}</td>
-        </tr>
-        <tr>
-            <td>Institutionalized Adults</td>
-            <td>{{ institutionalized_adult }}</td>
-        </tr>
-        <tr>
-            <td>Institutionalized Juveniles</td>
-            <td>{{ institutionalized_juvenile }}</td>
-        </tr>
-        <tr>
-            <td>University Housing</td>
-            <td>{{ university_housing }}</td>
-        </tr>
-        <tr>
-            <td>Military Housing</td>
-            <td>{{ military_pop }}</td>
-        </tr>
-    </table>
+    {% for dataset in census_acs_display_data %}
+    <div class="container">
+        <h4>{{ dataset.title }}</h4>
+        <table>
+            {% for data in dataset.data %}
+            <tr>
+                <td>{{ data.label }}</td>
+                <td>{{ data.value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br>
+    </div>
+    {% endfor %}
     
 </div>
 
 <div class="tabcontent" id="Yelp">
     <span onclick="this.parentElement.style.display='none'" class="topright">x</span>
     
-    <h3>Here are the results from Yelp</h3>
+    <h4>Here are the results from Yelp</h4>
     <container>
         <div class="row">
         <table>
-            {% for key,value in yelp_data.items %}
+            {% for key,value in yelp_display_data.items %}
             <tr>
                 <th>{{ key }}</th>
                 <th>Address</th>
@@ -122,12 +95,7 @@
 
 </div>
 
-<div class="tabcontent" id="Ticketmaster">
-    <span onclick="this.parentElement.style.display='none'" class="topright">x</span>
-    <h3>Here are the results from Ticketmaster</h3>
-</div>
-
-{{ yelp_data|json_script:"yelp-data-json" }}
+{{ yelp_display_data|json_script:"yelp-data-json" }}
 
 <p data-lat="{{ latitude }}" id="latitude"></p>
 <p data-long="{{ longitude }}" id="longitude"></p>
