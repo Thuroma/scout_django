@@ -1,4 +1,5 @@
 {% extends 'scout_app/base.html' %}
+{% load static %}
 {% block content %}
 
 <div>
@@ -15,6 +16,8 @@
         </div>
     </form>
 </div>
+
+<div id="map"></div>
 
 <div class="tab">
     <button class="tablinks" onclick="openSource(event, 'Census')">Census</button>
@@ -103,11 +106,64 @@
 
 {% endblock %}
 
-{% block javascript %}
+{% block scripts %}
 
 <script>
+   
+    document.addEventListener("DOMContentLoaded", () => {
+        let latitude = document.querySelector("#latitude")
+        let longitude = document.querySelector("#longitude")
+        let map = createMap([latitude.dataset.lat, longitude.dataset.long], 12)
 
+        let venues = JSON.parse(document.getElementById('yelp-data-json').textContent)
+        // console.log(venues)
+
+        // let markerFeatureGroup = L.featureGroup().addTo(map);
     
+        // for (let categoryType of venues) {
+        //     if (categoryType.data.length > 0) {
+        //         for (let data of categoryType.data) {
+        //             L.marker([data.coordinates.latitude, data.coordinates.longitude]).addTo(markerFeatureGroup)                
+        //         }
+        //     }
+
+        // }
+
+        for (let categoryType of venues) {
+            if (categoryType.data.length > 0) {
+                for (let element of categoryType.data) {
+
+                    var icon_image_filename = categoryType['image_url']
+
+                    var image_url = `{% static 'images/map_icons/${icon_image_filename}' %}`
+                                    
+                    let markerText = `
+                                    <div><img style="width: 200px;" src="${element['image_url']}"></div>
+                                    <div><strong>${element['name']}</strong>
+                                    <div>${element['display_phone']}</div>
+                                    <div>${element['rating']} out of 5 stars (${element['review_count']} reviews)</div>
+                                    <div><a href="${element['url']}" target="_blank">More info</a></div>
+                                    `
+                    // L.marker([element.coordinates.latitude, element.coordinates.longitude]).bindPopup(markerText).addTo(map)
+                    // // L.marker([data.coordinates.latitude, data.coordinates.longitude]).addTo(markerFeatureGroup)                
+
+        
+                    let marker = new L.Icon({
+                        iconUrl: `../static/images/map_icons/${icon_image_filename}`,
+                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                        iconSize: [40, 40],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowSize: [41, 41]
+                      });
+                    // map.setView([latitudeCoordinates, longitudeCoordinates], 12)
+                    L.marker([element.coordinates.latitude, element.coordinates.longitude], {icon: marker}).bindPopup(markerText).addTo(map)
+                }
+            }
+        }          
+    });
+
+
 
 </script>
 

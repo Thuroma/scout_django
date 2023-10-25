@@ -98,6 +98,13 @@ def search_results(request, search_pk):
 
     try:
         # YELP SECTION
+        # Yellow - #B09300
+        # Green - #00831E
+        # Blue - #008BB0
+        # Red - 
+        # Purple - #7F00B0
+
+
         # 1609.3 meters per mile
         search_miles = 2
         search_radius = search_miles * 1609
@@ -110,24 +117,47 @@ def search_results(request, search_pk):
             "Authorization": f'{yelp_api_authorization}'
         }
 
-        list_of_keywords = ['Parks', 'Civic Centers', 'Gyms', 'Breweries', 'Restaurants', 'Grocery Stores', 'Schools', 'Convienience Stores', 'Bars', 'Vegan']
-
-        yelp_display_data = {}
-
-        for keyword in list_of_keywords:
+        yelp_display_data = [
+            {'category': 'Parks', 
+             'image_url': 'park_map_icon.png'},
+            {'category': 'Civic Centers', 
+             'image_url': 'civic_center_map_icon.png'},
+            {'category': 'Gyms', 
+             'image_url': 'gym_map_icon.png'},
+            {'category': 'Breweries', 
+             'image_url': 'shop_map_icon.png'},
+            {'category': 'Restaurants', 
+             'image_url': 'restaurant_map_icon.png'},
+            {'category': 'Grocery Stores', 
+             'image_url': 'market_map_icon.png'},
+            {'category': 'Gas Stations', 
+             'image_url': 'gas_station_map_icon.png'},
+            {'category': 'Convienience Stores', 
+             'image_url': 'market_map_icon.png'},
+            {'category': 'Bars', 
+             'image_url': 'shop_map_icon.png'},
+            {'category': 'Vegan', 
+             'image_url': 'park_map_icon.png'},
             
-            url = f'https://api.yelp.com/v3/businesses/search?latitude={search.latitude}&longitude={search.longitude}&term={keyword}&radius={search_radius}&categories=&sort_by=best_match&limit={search_limit}'
+        ]
+
+        for search_term in yelp_display_data:
+
+            category = search_term['category']
+            
+            url = f'https://api.yelp.com/v3/businesses/search?latitude={search.latitude}&longitude={search.longitude}&term={category}&radius={search_radius}&categories=&sort_by=best_match&limit={search_limit}'
 
             response = requests.get(url, headers=headers)
             response_json = response.json()
+            
+            search_term['data'] = response_json['businesses']
 
-            if response_json['businesses'] != []:
-                yelp_display_data[f'{keyword}'] = response_json
-
-    except:
-        print('There was an issue with the yelp call.')
+    except KeyError as e:
+        print('There was an issue with the yelp call.' + e)
 
     context = { 
+        'latitude': search.latitude,
+        'longitude': search.longitude,
         'census_geography_data': census_geography_data,
         'census_acs_display_data': census_acs_display_data,
         'yelp_display_data': yelp_display_data }
