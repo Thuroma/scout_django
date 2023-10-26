@@ -24,14 +24,23 @@
 
 <h2>Or, by entering an address below!</h2>
 
-<form action="{% url 'new_search' %}" method="post">
-    {% csrf_token %}
-    <table>
-        {{ new_search_form }}
-    </table>
+<div>
+    <form action="{% url 'new_search' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <label for="address-input">Address</label>
+            <input id="address-input" name="street_address" required>
+            
+            <label for="city-input">City</label>
+            <input id="city-input" name="city" required>
 
-    <input type="submit" id="scout-button" class="btn btn-primary" name="address_search" value="Scout">
-</form>
+            <label for="state-input">State</label>
+            <input id="state-input" name="state" required>
+            
+            <input type="submit" id="scout-button" class="btn btn-primary" name="new_search" value="Scout">
+        </div>
+    </form>
+</div>
 
 {% endblock %}
 
