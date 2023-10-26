@@ -23,7 +23,7 @@ def new_search(request):
     
     if request.method == 'POST':
         new_search_form = NewSearchForm(request.POST)
-        search = new_search_form.save(commit=False)     # Create a new Place from the form
+        search = new_search_form.save(commit=False)     # Create a new Search from the form
         search.user = request.user                      # Associate the search with the logged in user
 
         geocoder_response_from_address_search = get_geocoder_response_from_address(search.street_address, search.city, search.state)
@@ -106,9 +106,9 @@ def search_results(request, search_pk):
 
 
         # 1609.3 meters per mile
-        search_miles = 2
+        search_miles = 5
         search_radius = search_miles * 1609
-        search_limit = 5
+        search_limit = 10
 
         yelp_api_authorization = os.getenv('YELP_AUTHORIZATION')
 
@@ -149,7 +149,7 @@ def search_results(request, search_pk):
 
             response = requests.get(url, headers=headers)
             response_json = response.json()
-            
+
             search_term['data'] = response_json['businesses']
 
     except KeyError as e:
