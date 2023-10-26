@@ -3,6 +3,10 @@
 
 <h2>Search by clicking an area on the map!</h2>
 
+<body>
+
+<div id="map"></div>
+
 <div>
     <form action="{% url 'lat_long_search' %}" method="post">
         {% csrf_token %}
@@ -28,5 +32,19 @@
 
     <input type="submit" id="scout-button" class="btn btn-primary" name="address_search" value="Scout">
 </form>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        let map = createMap([37.09024, -95.712891], 4)
+    });
+
+    document.getElementById("map")
+
+</script>
 
 {% endblock %}

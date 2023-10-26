@@ -1,113 +1,164 @@
 {% extends 'scout_app/base.html' %}
+{% load static %}
 {% block content %}
-
-<div>
-    <form action="{% url 'lat_long_search' %}" method="post">
-        {% csrf_token %}
+<div class="row">
+    <div class="col">
         <div>
-            <label for="latitude-input">Latitude</label>
-            <input id="latitude-input" name="latitude" onkeydown="event.preventDefault()" required autocomplete="off" value="{{ class_latitude }}">
-            
-            <label for="longitude-input">Longitude</label>
-            <input id="longitude-input" name="longitude" onkeydown="event.preventDefault()" required autocomplete="off" value="{{ class_longitude }}">
-            
-            <input type="submit" id="scout-button" class="btn btn-primary" name="lat_long_search" value="Scout">
+        <form action="{% url 'lat_long_search' %}" method="post">
+            {% csrf_token %}
+            <div>
+                <label for="latitude-input">Latitude</label>
+                <input id="latitude-input" name="latitude" onkeydown="event.preventDefault()" required autocomplete="off" value="{{ class_latitude }}">
+                
+                <label for="longitude-input">Longitude</label>
+                <input id="longitude-input" name="longitude" onkeydown="event.preventDefault()" required autocomplete="off" value="{{ class_longitude }}">
+                
+                <input type="submit" id="scout-button" class="btn btn-primary" name="lat_long_search" value="Scout">
+            </div>
+        </form>
         </div>
-    </form>
-</div>
-
-<div class="tab">
-    <button class="tablinks" onclick="openSource(event, 'Census')">Census</button>
-    <button class="tablinks" onclick="openSource(event, 'Yelp')">Yelp</button>
-</div>
-
-<div class="tabcontent" id="Census">
-    <span onclick="this.parentElement.style.display='none'" class="topright">x</span>
-
-    <div class="container">
-        {% if census_geography_data.incorporated_place_code %}
-            <h3>Area information for {{ census_geography_data.incorporated_place_name }}, {{ census_geography_data.state_name }}</h3>
-        {% elif census_geography_data.county_subdivision_code %}
-            <h3>Area information for {{ census_geography_data.county_subdivision_name }}</h3>
-            <h3>A subdivision of {{ census_geography_data.county_name }}, {{ census_geography_data.state_name }}</h3>
-        {% elif census_geography_data.county_code %}
-            <h3>Area information for {{ census_geography_data.county_name }}, {{ census_geography_data.state_name }}</h3>
-        {% endif %}
+        
+        <div id="map"></div>
     </div>
+    <div class="col">
+        
+        <div class="tab">
+            <button class="tablinks" onclick="openSource(event, 'Census')">Census</button>
+            <button class="tablinks" onclick="openSource(event, 'Yelp')">Yelp</button>
+        </div>
+        
+        <div class="tabcontent" id="Census">
+            <div class="overflow-auto">
+            <span onclick="this.parentElement.style.display='none'" class="topright">x</span>
 
-    <div class="container">
-        <h4>Geography Data</h4>
-        <table>
-            <tr>
-                <td>School district</td>
-                <td>{{ census_geography_data.school_district_name }}</td>
-            </tr>
-        </table>
-        <br>
-    </div>
+            <div class="container">
+                {% if census_geography_data.incorporated_place_code %}
+                    <h3>Area information for {{ census_geography_data.incorporated_place_name }}, {{ census_geography_data.state_name }}</h3>
+                {% elif census_geography_data.county_subdivision_code %}
+                    <h3>Area information for {{ census_geography_data.county_subdivision_name }}</h3>
+                    <h3>A subdivision of {{ census_geography_data.county_name }}, {{ census_geography_data.state_name }}</h3>
+                {% elif census_geography_data.county_code %}
+                    <h3>Area information for {{ census_geography_data.county_name }}, {{ census_geography_data.state_name }}</h3>
+                {% endif %}
+            </div>
 
-    {% for dataset in census_acs_display_data %}
-    <div class="container">
-        <h4>{{ dataset.title }}</h4>
-        <table>
-            {% for data in dataset.data %}
-            <tr>
-                <td>{{ data.label }}</td>
-                <td>{{ data.value }}</td>
-            </tr>
+            <div class="container">
+                <h4>Geography Data</h4>
+                <table>
+                    <tr>
+                        <td>School district</td>
+                        <td>{{ census_geography_data.school_district_name }}</td>
+                    </tr>
+                </table>
+                <br>
+            </div>
+
+            {% for dataset in census_acs_display_data %}
+            <div class="container">
+                <h4>{{ dataset.title }}</h4>
+                <table>
+                    {% for data in dataset.data %}
+                    <tr>
+                        <td>{{ data.label }}</td>
+                        <td>{{ data.value }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <br>
+            </div>
             {% endfor %}
-        </table>
-        <br>
-    </div>
-    {% endfor %}
-    
-</div>
-
-<div class="tabcontent" id="Yelp">
-    <span onclick="this.parentElement.style.display='none'" class="topright">x</span>
-    
-    <h4>Here are the results from Yelp</h4>
-    <container>
-        <div class="row">
-        <table>
-            {% for key,value in yelp_display_data.items %}
-            <tr>
-                <th>{{ key }}</th>
-                <th>Address</th>
-                <th>Phone</th>
-                <th>Rating</th>
-                <th>Website</th>
-            </tr>
-                {% for value in value.businesses %}
-                <tr>
-                    <td>{{ value.name }}</td>
-                    <td>{{ value.location.address1 }}, {{ value.location.city }}, {{ value.location.state }} {{ value.location.zip_code }}</td>
-                    <td>{{ value.display_phone }}</td>
-                    <td>{{ value.rating }}/5</td>
-                    <td><a target="_blank" href="{{ value.url }}">Yelp page</a></td>
-                </tr>
-                {% endfor %}
-            <hr>
-        {% endfor %}    
-        </table>        
+            </div>
         </div>
-    </container>
 
+        <div class="tabcontent" id="Yelp">
+            <span onclick="this.parentElement.style.display='none'" class="topright">x</span>
+            <h4>Here are the results from Yelp</h4>
+
+            {% for category in yelp_display_data %}
+                {% if category.data %}
+                <div class="card">
+                <div class="overflow-auto">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>{{ category.category }}</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th>Rating</th>
+                        <th>Website</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for value in category.data %}
+                        <tr>
+                            <td>{{ value.name }}</td>
+                            <td>{{ value.location.address1 }}, {{ value.location.city }}, {{ value.location.state }} {{ value.location.zip_code }}</td>
+                            <td>{{ value.display_phone }}</td>
+                            <td>{{ value.rating }}/5</td>
+                            <td><a target="_blank" href="{{ value.url }}">Yelp page</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    </div>
+                </table>        
+                </div>
+                </div>
+                {% endif %}
+            {% endfor %}    
+        </div>
+
+        {{ yelp_display_data|json_script:"yelp-data-json" }}
+
+        <p data-lat="{{ latitude }}" id="latitude"></p>
+        <p data-long="{{ longitude }}" id="longitude"></p>
+        </div>
 </div>
-
-{{ yelp_display_data|json_script:"yelp-data-json" }}
-
-<p data-lat="{{ latitude }}" id="latitude"></p>
-<p data-long="{{ longitude }}" id="longitude"></p>
 
 
 {% endblock %}
 
-{% block javascript %}
+{% block scripts %}
 
 <script>
+   
+    document.addEventListener("DOMContentLoaded", () => {
+        let latitude = document.querySelector("#latitude")
+        let longitude = document.querySelector("#longitude")
+        let map = createMap([latitude.dataset.lat, longitude.dataset.long], 13)
 
-    
+        let venues = JSON.parse(document.getElementById('yelp-data-json').textContent)
+
+        for (let categoryType of venues) {
+            if (categoryType.data.length > 0) {
+                for (let element of categoryType.data) {
+
+                    var icon_image_filename = categoryType['image_url']
+
+                    var image_url = `{% static 'images/map_icons/${icon_image_filename}' %}`
+                                    
+                    let markerText = `
+                                    <div><img class="map_image" src="${element['image_url']}"></div>
+                                    <div><strong>${element['name']}</strong>
+                                    <div>${element['display_phone']}</div>
+                                    <div>${element['rating']} out of 5 stars (${element['review_count']} reviews)</div>
+                                    <div><a href="${element['url']}" target="_blank">More info</a></div>
+                                    `
+        
+                    let marker = new L.Icon({
+                        iconUrl: `../static/images/map_icons/${icon_image_filename}`,
+                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                        iconSize: [40, 40],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowSize: [41, 41]
+                      });
+                    L.marker([element.coordinates.latitude, element.coordinates.longitude], {icon: marker}).bindPopup(markerText).addTo(map)
+                }
+            }
+        }          
+    });
+
+
 
 </script>
 
