@@ -2,10 +2,10 @@
 {% load static %}
 {% block content %}
 
-<div class="container-fluid" class="page-content">
+<div class="container-fluid wrapper" id="main-wrapper">
 <div class="row">
 
-<div class="col-md-8">
+<div class="col-md-8 container">
     <div class="row">
         
         <form action="{% url 'lat_long_search' %}" method="post">
@@ -19,47 +19,40 @@
             <input type="submit" id="scout-button" class="btn btn-primary" name="lat_long_search" value="Scout">
         </form>
 
-        <div id="map"></div>
+        <div class="container-fluid" id="map"></div>
     
     </div>
 </div>
 
-<div class="col-md-4 overflow-auto" id="content">
-<div class="content-column">
+<div class="col-md-4 container">
+<div class="container-fluid overflow-auto">
 <div class="row">
-        <h4>Here are the results from Yelp</h4>
         
-        {% for category in yelp_display_data %}
+    {% for category in yelp_display_data %}
         {% if category.data %}
-        <div class="card">
-            <div class="overflow-auto">
-            <table class="table table-hover">
-                <title>{{ category.category }}</title>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th>Rating</th>
-                        <th>Website</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for value in category.data %}
-                    <tr>
-                        <td>{{ value.name }}</td>
-                        <td>{{ value.location.address1 }}, {{ value.location.city }}, {{ value.location.state }} {{ value.location.zip_code }}</td>
-                        <td>{{ value.display_phone }}</td>
-                        <td>{{ value.rating }}/5</td>
-                        <td><a target="_blank" href="{{ value.url }}">Yelp page</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>        
-            </div>
+
+        <div>
+            <h3>{{ category.category }}</h3>
+        </div>
+        <div>
+        <ul class="list-group list-group-horizontal position-relative overflow-auto w-75">
+            {% for value in category.data %}
+            <li class="list-group-item container-fluid">
+                <div class="card">
+                    <img class="card-img-top" src={{ value.image_url }}>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ value.name }}</h5>
+                        <p class="card-text">{{ value.location.address1 }}, <br> {{ value.location.city }}, {{ value.location.state }} {{ value.location.zip_code }}</p>
+                        <a href={{ value.url }} class="btn btn-primary">Yelp page</a>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
         </div>
         {% endif %}
-        {% endfor %}    
+    {% endfor %} 
+
 </div>
 <div class="row">
     <div id="census">
@@ -108,10 +101,10 @@
     <p data-long="{{ longitude }}" id="longitude"></p>
 </div>
 </div>
+</div>
 
 </div>
 </div>
-
 
 
 {% endblock %}
