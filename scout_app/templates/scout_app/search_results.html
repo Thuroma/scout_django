@@ -5,7 +5,7 @@
 <div class="container-fluid wrapper" id="main-wrapper">
 <div class="row">
 
-<div class="col-md-8 container">
+<div class="col-md-8 search-map-container">
     <div class="row">
         
         <form action="{% url 'lat_long_search' %}" method="post">
@@ -24,21 +24,23 @@
     </div>
 </div>
 
-<div class="col-md-4 container">
-<div class="container-fluid overflow-auto">
+<div class="col-md-4 search-results-container overflow-auto" id="results-column">
+<div class="container-fluid">
+
 <div class="row">
         
     {% for category in yelp_display_data %}
         {% if category.data %}
 
-        <div>
+        <div class="row">
+        <div class="container-fluid">
             <h3>{{ category.category }}</h3>
         </div>
-        <div>
+        <br>
         <ul class="list-group list-group-horizontal position-relative overflow-auto w-75">
             {% for value in category.data %}
             <li class="list-group-item container-fluid">
-                <div class="card">
+                <div class="card" id="yelp-result-card">
                     <img class="card-img-top" src={{ value.image_url }}>
                     <div class="card-body">
                         <h5 class="card-title">{{ value.name }}</h5>
@@ -100,6 +102,12 @@
     <p data-lat="{{ latitude }}" id="latitude"></p>
     <p data-long="{{ longitude }}" id="longitude"></p>
 </div>
+<div class="row">
+    <div class="footer" id="main-footer">
+        <h5>Icons by <a target="_blank" href="https://icons8.com">Icons8</a></h5>
+    </div>
+</div>
+
 </div>
 </div>
 
