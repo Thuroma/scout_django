@@ -32,6 +32,14 @@ body {
     width: 100%;
 }
 
+#yelp-scroll-categories {
+    padding: 0px;
+}
+
+.row {
+    padding: 0px;
+}
+
 .instruction-title {
     text-align: center;
 }
@@ -207,29 +215,28 @@ table.center {
     margin-right: auto;
 }
 
-td {
-    border-bottom: #000000 1px;
-}
-
 /* card styles */
 #yelp-result-card {
     height: 500px;
     width: 300px;
-    border-radius: 25px;
-    background: #ffffff;
-    box-shadow:  9px 9px 18px #d6d6d6,
-                 -9px -9px 18px #ffffff;
+}
+
+.overlay {
+    background: linear-gradient(0deg, #00000088 30%, #ffffff44 100%);
+    position: absolute;
+    height: 300px;
+    width: 300px;
+    text-align: left;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
 }
 
 .card-img-top {
     height: 300px;
     width: 300px;
     overflow: hidden;
-}
-
-.card-body {
-    position: absolute;
-    bottom: 0;
+    position: relative;
 }
 
 .map_image {

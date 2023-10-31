@@ -25,25 +25,26 @@
 </div>
 
 <div class="col-md-4 search-results-container overflow-auto" id="results-column">
-<div class="container-fluid">
 
-<div class="row">
-        
+<div class="row">    
     {% for category in yelp_display_data %}
         {% if category.data %}
 
-        <div class="row">
+        <div class="row overflow-hidden container-fluid">
         <div class="container-fluid">
             <h3>{{ category.category }}</h3>
         </div>
         <br>
-        <ul class="list-group list-group-horizontal position-relative overflow-auto w-75">
+        <ul class="list-group list-group-horizontal position-relative overflow-auto container-fluid" id="yelp-scroll-categories">
             {% for value in category.data %}
             <li class="list-group-item container-fluid">
                 <div class="card" id="yelp-result-card">
                     <img class="card-img-top" src={{ value.image_url }}>
+                    <div class="overlay container-fluid">
+                        {{ value.name }}
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ value.name }}</h5>
+                        <!-- <h5 class="card-title">{{ value.name }}</h5> -->
                         <p class="card-text">{{ value.location.address1 }}, <br> {{ value.location.city }}, {{ value.location.state }} {{ value.location.zip_code }}</p>
                         <a href={{ value.url }} class="btn btn-primary">Yelp page</a>
                     </div>
@@ -54,8 +55,8 @@
         </div>
         {% endif %}
     {% endfor %} 
-
 </div>
+
 <div class="row">
     <div id="census">
         <div class="container-fluid">
@@ -102,6 +103,7 @@
     <p data-lat="{{ latitude }}" id="latitude"></p>
     <p data-long="{{ longitude }}" id="longitude"></p>
 </div>
+
 <div class="row">
     <div class="footer" id="main-footer">
         <h5>Icons by <a target="_blank" href="https://icons8.com">Icons8</a></h5>
