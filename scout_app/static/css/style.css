@@ -4,29 +4,73 @@
 }
 
 #map {
-    height: 500px;
+    height: 82vh;
     width: 100%;
-    margin: auto;
-    margin-bottom: 1rem;
 }
 
 body {
     font-family: 'Josefin Sans', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
 }
 
-.col {
-    height: 700px;
+.search-map-container {
+    height: 100%;
+    width: 60vw;
+    float:left;
 }
 
-/* Header */
-#main-header {
+.search-results-container {
+    height: 100%;
+    width: 40vw;
+    float: right;
+}
+
+#results-column {
+    height: 85vh;
+    width: 100%;
+}
+
+#yelp-scroll-categories {
+    padding: 0px;
+}
+
+.row {
+    padding: 0px;
+}
+
+.instruction-title {
+    text-align: center;
+}
+
+/* Header/Footer */
+.header {
+    height: 10vh;
+    min-height: 100px;
     text-align: center;
     background: #008080;
     font-family: 'Caveat', cursive;
     font-size: 90px;
     padding: 1rem;
-    margin-bottom: 0px;
     color: white;
+    width: 100%;
+}
+
+#main-wrapper {
+    height: 77vh;
+    width: 100%
+}
+
+.footer {
+    height: 100px;
+    text-align: center;
+    background: #008080;
+    font-family: 'Caveat', cursive;
+    font-size: 12px;
+    padding: 1rem;
+    color: white;
+    width: 100%;
 }
 
 /* Navigation Bar */
@@ -35,6 +79,8 @@ body {
     background-color: #cbbf7a;
     overflow: hidden;
 }
+
+
 
 /* Style the links inside the navigation bar */
 .topnav a {
@@ -135,14 +181,11 @@ body {
 /* Style the tab content */
 .tabcontent {
     width: 100%;
+    height: 500px;
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
-}
-
-/* fading the content in and out */
-.tabcontent {
     animation: fadeEffect 1s; /* Fading effect takes 1 second */
 }
 
@@ -173,13 +216,27 @@ table.center {
 }
 
 /* card styles */
-.card {
-    margin: 15px;
-    height: 200px;
-    border-radius: 10px;
-    background: linear-gradient(145deg, #e6e6e6, #ffffff);
-    box-shadow:  17px 17px 33px #d9d9d9,
-                -17px -17px 33px #ffffff;
+#yelp-result-card {
+    height: 500px;
+    width: 300px;
+}
+
+.overlay {
+    background: linear-gradient(0deg, #00000088 30%, #ffffff44 100%);
+    position: absolute;
+    height: 300px;
+    width: 300px;
+    text-align: left;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.card-img-top {
+    height: 300px;
+    width: 300px;
+    overflow: hidden;
+    position: relative;
 }
 
 .map_image {

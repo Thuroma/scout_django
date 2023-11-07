@@ -1,7 +1,5 @@
 from django import forms
-from .models import Search
 
-class NewSearchForm(forms.ModelForm):
+class NewSearchForm(forms.Form):
     class Meta:
-        model = Search
         fields = ('street_address', 'city', 'state')

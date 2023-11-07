@@ -2,10 +2,9 @@ import requests
 import logging
 import os
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, JsonResponse
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Search
 from .forms import NewSearchForm
 from pprint import pprint
 from dotenv import load_dotenv
