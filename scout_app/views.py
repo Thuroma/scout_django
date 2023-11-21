@@ -97,7 +97,7 @@ def search_results(request, latitude, longitude):
 
 
         # 1609.3 meters per mile
-        search_miles = 5
+        search_miles = 3
         search_radius = search_miles * 1609
         search_limit = 10
 
@@ -109,27 +109,36 @@ def search_results(request, latitude, longitude):
         }
 
         yelp_display_data = [
-            {'category': 'Parks', 
-             'image_url': 'park_map_icon.png'},
-            {'category': 'Civic Centers', 
-             'image_url': 'civic_center_map_icon.png'},
-            {'category': 'Gyms', 
-             'image_url': 'gym_map_icon.png'},
-            {'category': 'Breweries', 
-             'image_url': 'brewery_map_icon.png'},
-            {'category': 'Restaurants', 
-             'image_url': 'restaurant_map_icon.png'},
-            {'category': 'Grocery Stores', 
-             'image_url': 'market_map_icon.png'},
-            {'category': 'Gas Stations', 
-             'image_url': 'gas_station_map_icon.png'},
-            {'category': 'Convienience Stores', 
-             'image_url': 'shop_map_icon.png'},
-            {'category': 'Bars', 
-             'image_url': 'bar_map_icon.png'},
-            {'category': 'Vegan', 
-             'image_url': 'vegan_map_icon.png'},
-            
+            {'category': 'parks', 
+             'image_url': 'pin_map_icon_lime_green.png',
+             'index': 'item-one'},
+            {'category': 'civic centers', 
+             'image_url': 'pin_map_icon_purple.png',
+             'index': 'item-two'},
+            {'category': 'gyms', 
+             'image_url': 'pin_map_icon_teal.png',
+             'index': 'item-three'},
+            {'category': 'breweries', 
+             'image_url': 'pin_map_icon_brown.png',
+             'index': 'item-four'},
+            {'category': 'restaurants', 
+             'image_url': 'pin_map_icon_red.png',
+             'index': 'item-five'},
+            {'category': 'grocery stores', 
+             'image_url': 'pin_map_icon_orange.png',
+             'index': 'item-six'},
+            {'category': 'gas stations', 
+             'image_url': 'pin_map_icon_yellow.png',
+             'index': 'item-seven'},
+            {'category': 'convienience stores', 
+             'image_url': 'pin_map_icon_blue.png',
+             'index': 'item-eight'},
+            {'category': 'bars', 
+             'image_url': 'pin_map_icon_white.png',
+             'index': 'item-nine'},
+            {'category': 'vegan', 
+             'image_url': 'pin_map_icon_green.png',
+             'index': 'item-ten'}   
         ]
 
         for search_term in yelp_display_data:
