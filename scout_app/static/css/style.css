@@ -219,17 +219,24 @@ table.center {
 #yelp-result-card {
     height: 500px;
     width: 300px;
+    background-color: rgba(255, 255, 255, 0);
 }
 
 .overlay {
     background: linear-gradient(0deg, #00000088 30%, #ffffff44 100%);
-    position: absolute;
     height: 300px;
     width: 300px;
+    position: absolute;
+}
+
+.image-overlay-text {
+    position: absolute;
     text-align: left;
     color: white;
-    font-size: 32px;
+    font-size: 24px;
     font-weight: bold;
+    bottom: 1px;
+    left: 4px;
 }
 
 .card-img-top {
@@ -243,3 +250,66 @@ table.center {
     width: 150px;
 }
 
+.card-body {
+    background: rgba(255, 255, 255, 0.637)
+}
+
+li.item-one {
+    background-color: #f78f8f;
+    /* background-color: #b74444; */
+}
+
+li.item-two {
+    /* background-color: #b2b744;     */
+    background-color: #f3f78f;
+}
+
+li.item-three {
+    /* background-color: #4446b7; */
+    background-color: #8f97f7;
+}
+
+li.item-four {
+    /* background-color: #b78844; */
+    background-color: #f7cd8f;
+}
+
+li.item-five {
+    background-color: #8ff797;
+    /* background-color: #44b74d; */
+}
+
+li.item-six {
+    background-color: #d18ff7;
+    /* background-color: #8944b7; */
+}
+
+li.item-seven {
+    /* background-color: #7a4200; */
+    background-color: #8f6029;
+}
+
+li.item-eight {
+    /* background-color: #3093a4; */
+    background-color: #a9f0ff;
+}
+
+li.item-nine {
+    /* background-color: #a43072; */
+    background-color: #ffa9dc;
+}
+
+li.item-ten {
+    background-color: #6a6a6a;
+    /* background-color: #000000; */
+}
+
+li.item-eleven {
+    /* background-color: #84a430; */
+    background-color: #e5ffa9;
+}
+
+li.item-twelve {
+    background-color: #ffffff;
+    /* background-color: #000000; */
+}
